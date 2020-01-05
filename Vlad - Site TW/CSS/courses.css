@@ -1,0 +1,72 @@
+
+.page_content
+{
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+
+.course_box {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: rgba(104, 128, 172,0.5);
+    width: 250px;
+    /* cu colturi rotunjite */
+}
+
+.course_box .descriere {
+
+}
+
+.course_box a {
+    color:inherit;
+    text-decoration: none;
+}
+
+.course_box img {
+    width: 250px;
+    height: 250px;
+
+}
+
+.course_box .titlu {
+    text-align: center;
+    text-decoration: red;
+
+}
+
+.course_box .descriere {
+    padding-left: 10px;
+    padding-right: 10px;
+
+}
+
+
+/* Small screens */
+@media screen and (max-width: 576px)
+{
+  .course_box .descriere {
+      font-size: 130%;
+  }
+  .course_box .ul {
+      font-size: 130%;
+  }
+}
+
+/*Tablets */
+@media screen and (min-width:577px)
+{
+
+}
+
+/* Large Screens */
+@media screen and (min-width:993px)
+{
+    #gmap_canvas
+    {
+        width: 35vw;
+        height: 500px;
+    }
+
+}
