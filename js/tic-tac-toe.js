@@ -1,21 +1,51 @@
-let board;
+var origBoard;
+var huPlayer='X';
+var aiPlayer='0';
+var huScore=0;
+var aiScore=0;
 
-init();
+const winCombos=[
+    [0,1,2],
+    [3,4,5],
+    [6,7,8],
+    [0,3,6],
+    [1,4,7],
+    [2,5,8],
+    [0,4,8],
+    [6,4,2]
+];
 
-function init() 
+const cells = document.querySelectorAll('.cell');
+
+
+
+startGame();
+
+
+
+function startGame()
 {
-    board = [
-    '', '', '',
-    '', '', '',
-    '', '', ''
-    ];
-    render();
-};
-
-function render() 
-{
-    board.forEach(function(mark, index)
+    document.querySelector(".endgame").style.display = "none";
+    origBoard = Array.from(Array(9).keys());
+    console.log("origBoard = " + origBoard);
+    for(var i=0; i< cells.length;i++)
     {
-        console.log(mark, index);
-    });
-};
+        cells[i].innerText='';
+        cells[i].style.removeProperty('background-color');
+        cells[i].addEventListener('click', turnClick, false);
+         
+    }
+}
+
+function turnClick(square)
+{
+    turn(square.target.id, huPlayer);
+}
+
+function turn(squareId, player)
+{
+    console.log("origBoard value: " + origBoard[squareId] + " Player value: " + player);
+    origBoard[squareId] = player;
+    document.getElementById(squareId).innerText = player;
+}
+
