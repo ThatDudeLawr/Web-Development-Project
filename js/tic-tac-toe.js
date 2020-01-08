@@ -3,6 +3,7 @@ var huPlayer='X';
 var aiPlayer='0';
 var huScore=0;
 var aiScore=0;
+var gameCompleted = false;
 document.querySelector('.playerscore').textContent = huScore;
 document.querySelector('.aiscore').textContent = aiScore;
 
@@ -27,6 +28,7 @@ startGame();
 
 function startGame()
 {
+    gameCompleted = false;
     document.querySelector(".endgame").style.display = "none";
     origBoard = Array.from(Array(9).keys());
     console.log("origBoard = " + origBoard);
@@ -45,8 +47,9 @@ function turnClick(square)
     if(typeof origBoard[square.target.id] == 'number')
     {
         turn(square.target.id, huPlayer);
-        if(!checkTie())
-            turn(bestSpot(), aiPlayer);
+        if(!gameCompleted)
+            if(!checkTie())
+                turn(bestSpot(), aiPlayer);
     }
 
 }
@@ -79,6 +82,7 @@ function checkWin(board, player)
 
 function gameOver(gameWon)
 {
+    gameCompleted = true;
     for(let index of winCombos[gameWon.index])
     {
         document.getElementById(index).style.backgroundColor = 
