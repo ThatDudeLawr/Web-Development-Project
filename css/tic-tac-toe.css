@@ -80,11 +80,11 @@ table tr td:last-child {
 .endgame {
   display: none;
   width: 200px;
-  top: 120px;
-  background-color: rgba(205,133,63, 0.8);
+  top: 240px;
+  background-color: rgba(23, 178, 240, 0.95);
   position: absolute;
   left: 50%;
-  margin-left: -100px;
+  margin-left: -75px;
   padding-top: 50px;
   padding-bottom: 50px;
   text-align: center;
