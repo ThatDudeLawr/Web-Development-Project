@@ -25,7 +25,7 @@ function drawFunction()
 
 function updatePosition() 
 {
-  var speed = document.querySelector('#speed').value;
+  var speed = Math.min(Math.max(document.querySelector('#speed').value, 0), 100);
   state.position.y += (state.velocity.y * speed);
   state.position.x += (state.velocity.x * speed);
 }
