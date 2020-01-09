@@ -92,7 +92,7 @@ $color5: rgba(36, 123, 160, 1);
   float: none;
 }
 
-/* Change the link color on hover */ 
+/* Change the nav_bar buttons color on hover */ 
 #nav_bar li > a:hover 
 {
   background-color: #afaeae;
@@ -107,7 +107,7 @@ $color5: rgba(36, 123, 160, 1);
 {
   background-color: #afaeae;
 }
-
+/* Change the nav_bar button color while being active */
 #nav_bar .active 
 {
   background-color: #555;

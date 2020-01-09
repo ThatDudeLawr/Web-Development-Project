@@ -4,8 +4,13 @@ var aiPlayer='0';
 var huScore=0;
 var aiScore=0;
 var gameCompleted = false;
+var turnCount=1;
+var multiplayer = 0;
+
 document.querySelector('.playerscore').textContent = huScore;
 document.querySelector('.aiscore').textContent = aiScore;
+document.querySelector('.player1').textContent = "Player: ";
+document.querySelector('.player2').textContent = "Computer: ";
 
 const winCombos=[
     [0,1,2],
@@ -24,7 +29,25 @@ const cells = document.querySelectorAll('.cell');
 
 startGame();
 
+function startMultiplayer()
+{
+    multiplayer=1;
+    huScore=0;
+    aiScore=0;
+    document.querySelector('.player1').textContent = "Player 1 (X):";
+    document.querySelector('.player2').textContent = "Player 2 (0): ";
+    startGame();
+}
 
+function startSinglePlayer()
+{
+    multiplayer=0;
+    huScore=0;
+    aiScore=0;
+    document.querySelector('.player1').textContent = "Player: ";
+    document.querySelector('.player2').textContent = "Computer: ";
+    startGame();
+}
 
 function startGame()
 {
@@ -36,13 +59,51 @@ function startGame()
     {
         cells[i].innerText='';
         cells[i].style.removeProperty('background-color');
-        cells[i].addEventListener('click', turnClick, false);
-         
+        cells[i].addEventListener('click', turnClick, false); 
+    }
+    
+    turnCount=1;
+
+}
+
+function xTurn(square)
+{
+    //Checks if the selected cell is free
+    if(typeof origBoard[square.target.id] == 'number')
+    {
+        turn(square.target.id, huPlayer);
+        if(!gameCompleted)
+            checkTie();
+        turnCount++;
+    }
+}
+
+function oTurn(square)
+{
+    //Checks if the selected cell is free
+    if(typeof origBoard[square.target.id] == 'number')
+    {
+        turn(square.target.id, aiPlayer);
+        if(!gameCompleted)
+            checkTie();
+        turnCount++;
     }
 }
 
 function turnClick(square)
 {
+    if(multiplayer==1)
+    {
+            if(turnCount%2==0)
+            {
+                oTurn(square);
+            }   
+            else
+            {
+                xTurn(square);
+            }
+    }
+    else
     //Checks if the selected cell is free
     if(typeof origBoard[square.target.id] == 'number')
     {
@@ -50,8 +111,8 @@ function turnClick(square)
         if(!gameCompleted)
             if(!checkTie())
                 turn(bestSpot(), aiPlayer);
+        turnCount++;
     }
-
 }
 
 //Sets the selected square with the player value(x) and updates the board
@@ -68,9 +129,10 @@ function checkWin(board, player)
 {   
     // Check on which indexes of the board are the player symbols and saves those indexes into the "a" array
     let plays = board.reduce((a,e,i) => (e===player) ? a.concat(i) : a , [] ) 
+    console.log(plays);
     let gameWon = null;
     for(let [index,win] of winCombos.entries())
-    {
+    {   
          if(win.every(elem => plays.indexOf(elem) > -1))
          {
              gameWon={index: index, player: player};
@@ -95,9 +157,17 @@ function gameOver(gameWon)
     {
         cells[i].removeEventListener('click', turnClick, false);
     }
-    if(gameWon.player==huPlayer)
+    if(gameWon.player==huPlayer && multiplayer==1)
     {   
-        declareWinner("You Win!");
+        declareWinner("Winner Player 1!");
+    }
+    else if(gameWon.player==aiPlayer && multiplayer==1)
+    {
+        declareWinner("Winner Player 2!")
+    }
+    else if(gameWon.player==huPlayer)
+    {
+        declareWinner("You Win!")
     }
     else
     {
@@ -117,8 +187,9 @@ function emptySquares()
 }
 
 function bestSpot()
-{
-    return emptySquares()[0];
+{   
+    //return minimax(origBoard, aiPlayer).index;
+        return emptySquares()[0];
 }
 
 function checkTie()
@@ -136,3 +207,77 @@ function checkTie()
     return false;
 }
 
+
+
+/*
+function minimax(newBoard, player) 
+{
+	var availSpots = emptySquares();
+
+    if (checkWin(newBoard, huPlayer)) 
+    {
+		return {score: -10};
+    } 
+    else if (checkWin(newBoard, aiPlayer)) 
+    {
+		return {score: 10};
+    } 
+    else if (availSpots.length === 0) 
+    {
+		return {score: 0};
+    }
+    
+    var moves = [];
+    
+    for (var i = 0; i < availSpots.length; i++) 
+    {
+		var move = {};
+		move.index = newBoard[availSpots[i]];
+		newBoard[availSpots[i]] = player;
+
+        if (player == aiPlayer) 
+        {
+			var result = minimax(newBoard, huPlayer);
+			move.score = result.score;
+        } 
+        else 
+        {
+			var result = minimax(newBoard, aiPlayer);
+			move.score = result.score;
+		}
+
+		newBoard[availSpots[i]] = move.index;
+
+		moves.push(move);
+	}
+
+	var bestMove;
+    if(player === aiPlayer) 
+    {
+		var bestScore = -10000;
+        for(var i = 0; i < moves.length; i++) 
+        {
+            if (moves[i].score > bestScore) 
+            {
+				bestScore = moves[i].score;
+				bestMove = i;
+			}
+		}
+    }
+    else 
+    {
+		var bestScore = 10000;
+        for(var i = 0; i < moves.length; i++) 
+        {
+            if (moves[i].score < bestScore) 
+            {
+				bestScore = moves[i].score;
+				bestMove = i;
+			}
+		}
+	}
+
+	return moves[bestMove];
+}
+
+*/

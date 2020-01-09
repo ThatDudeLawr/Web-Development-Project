@@ -25,6 +25,20 @@
                <ul> <a href="bouncing-square.html">Bouncing Square</a></ul>
           </div>
          </li>
+         <div class="buttons">
+         <li>
+            <button class="replay" onClick="startGame()">Replay</button>
+         </li>
+
+         <li>
+            <button class="MultiPlayer" onClick="startMultiplayer()">Multi Player</button>
+         </li>
+
+         <li>
+            <button class="SinglePlayer" onClick="startSinglePlayer()">Single Player</button>
+         </li>
+         
+         </div>
          <!-- <li ><a href="about.html">About</a></li> 
          -->
       </ul>
@@ -32,8 +46,8 @@
 
   <div class="score">
      <p>Score</p>
-     <li class="inline">Player: <a class="playerscore"></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li> 
-     <li class="inline">              Computer: <a class="aiscore"></a></li>
+     <li class="inline"><a class="player1"></a><a class="playerscore"></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li> 
+     <li class="inline"><a class="player2"></a><a class="aiscore"></a></li>
   </div>
 
    <table>
@@ -57,10 +71,16 @@
    <div class="endgame">
       <div class="text"></div>
    </div>
-
+<!--
    <div class="buttons">
    <button class="replay" onClick="startGame()">Replay</button>
+
+   <button class="MultiPlayer" onClick="startMultiplayer()">Multi Player</button>
+
+   <button class="SinglePlayer" onClick="startSinglePlayer()">Single Player</button>
+
    </div>
+   -->
 
    <script src="js/tic-tac-toe.js"></script>
 

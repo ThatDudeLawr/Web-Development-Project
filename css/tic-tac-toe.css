@@ -34,13 +34,19 @@ table tr td:last-child {
 	border-right: 0;
 }
 
-.replay{
+.buttons{
     border-collapse: collapse;
 	position: absolute;
-	left: 50%;
-	margin-left: -250px;
-    top: 250px;
-    display: block;
+    display: inline-block;
+    background-color: rgb(212, 212, 212);
+    color: black;
+    text-align: center;
+    margin-top: 15px;
+    margin-left: 20%;
+}
+
+.SinglePlayer, .MultiPlayer{
+    margin-left: 25px;
 }
 
 .score{
