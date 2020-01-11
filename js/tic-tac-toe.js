@@ -92,7 +92,7 @@ function oTurn(square)
 
 function turnClick(square)
 {
-    if(multiplayer==1)
+   if(multiplayer==1)
     {
             if(turnCount%2==0)
             {
@@ -102,7 +102,7 @@ function turnClick(square)
             {
                 xTurn(square);
             }
-    }
+    } 
     else
     //Checks if the selected cell is free
     if(typeof origBoard[square.target.id] == 'number')
@@ -129,7 +129,6 @@ function checkWin(board, player)
 {   
     // Check on which indexes of the board are the player symbols and saves those indexes into the "a" array
     let plays = board.reduce((a,e,i) => (e===player) ? a.concat(i) : a , [] ) 
-    console.log(plays);
     let gameWon = null;
     for(let [index,win] of winCombos.entries())
     {   
@@ -188,8 +187,8 @@ function emptySquares()
 
 function bestSpot()
 {   
-    //return minimax(origBoard, aiPlayer).index;
-        return emptySquares()[0];
+        return minimax(origBoard, aiPlayer).index;
+        //return emptySquares()[0];
 }
 
 function checkTie()
@@ -208,8 +207,6 @@ function checkTie()
 }
 
 
-
-/*
 function minimax(newBoard, player) 
 {
 	var availSpots = emptySquares();
@@ -227,7 +224,7 @@ function minimax(newBoard, player)
 		return {score: 0};
     }
     
-    var moves = [];
+    var availableMoves = [];
     
     for (var i = 0; i < availSpots.length; i++) 
     {
@@ -248,18 +245,18 @@ function minimax(newBoard, player)
 
 		newBoard[availSpots[i]] = move.index;
 
-		moves.push(move);
+		availableMoves.push(move);
 	}
 
 	var bestMove;
     if(player === aiPlayer) 
     {
 		var bestScore = -10000;
-        for(var i = 0; i < moves.length; i++) 
+        for(var i = 0; i < availableMoves.length; i++) 
         {
-            if (moves[i].score > bestScore) 
+            if (availableMoves[i].score > bestScore) 
             {
-				bestScore = moves[i].score;
+				bestScore = availableMoves[i].score;
 				bestMove = i;
 			}
 		}
@@ -267,17 +264,14 @@ function minimax(newBoard, player)
     else 
     {
 		var bestScore = 10000;
-        for(var i = 0; i < moves.length; i++) 
+        for(var i = 0; i < availableMoves.length; i++) 
         {
-            if (moves[i].score < bestScore) 
+            if (availableMoves[i].score < bestScore) 
             {
-				bestScore = moves[i].score;
+				bestScore = availableMoves[i].score;
 				bestMove = i;
 			}
 		}
 	}
-
-	return moves[bestMove];
+	return availableMoves[bestMove];
 }
-
-*/

@@ -1,4 +1,6 @@
 const logo = document.querySelector('#logo');
+var isXInside = true;
+var isYInside = true;
 
 //state default values are positioning the logo at the center of the screen and 
 const state = 
@@ -34,14 +36,20 @@ function collisionDetection()
 {
   if (state.position.x + logo.clientWidth >= window.innerWidth) 
   {
+    if(isXInside)
+    {
     state.velocity.x = -state.velocity.x;
     changeColor();
+    isXInside = false;
+    }
   } 
   else if (state.position.x <= 0) 
   {
     state.velocity.x = -state.velocity.x;
     changeColor();
   }
+  else
+    isXInside=true;
   
   if (state.position.y <= 53) 
   {
@@ -50,9 +58,15 @@ function collisionDetection()
   } 
   else if (state.position.y + logo.clientHeight >= window.innerHeight) 
   {
+    if(isYInside)
+    {
     state.velocity.y = -state.velocity.y;
     changeColor();
+    isYInside= false;
+    }
   }
+  else
+    isYInside = true;
 }
 
 function changeColor() 
