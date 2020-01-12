@@ -4,9 +4,10 @@ var aiPlayer='0';
 var huScore=0;
 var aiScore=0;
 var gameCompleted = false;
-var turnCount=1;
+var turnCount=1; // Being used to know which player turn it is during Multi Player
 var multiplayer = 0;
 
+//Display current Score
 document.querySelector('.playerscore').textContent = huScore;
 document.querySelector('.aiscore').textContent = aiScore;
 document.querySelector('.player1').textContent = "Player: ";
@@ -34,6 +35,9 @@ function startMultiplayer()
     multiplayer=1;
     huScore=0;
     aiScore=0;
+    //Display 2 players instead of Player/Computer
+    document.querySelector('.playerscore').textContent = huScore;
+    document.querySelector('.aiscore').textContent = aiScore;
     document.querySelector('.player1').textContent = "Player 1 (X):";
     document.querySelector('.player2').textContent = "Player 2 (0): ";
     startGame();
@@ -44,11 +48,15 @@ function startSinglePlayer()
     multiplayer=0;
     huScore=0;
     aiScore=0;
+    //Display Player/Computer instead of 2 Players
+    document.querySelector('.playerscore').textContent = huScore;
+    document.querySelector('.aiscore').textContent = aiScore;
     document.querySelector('.player1').textContent = "Player: ";
     document.querySelector('.player2').textContent = "Computer: ";
     startGame();
 }
 
+//Resets all the table values and removes all the set properties
 function startGame()
 {
     gameCompleted = false;
@@ -66,6 +74,7 @@ function startGame()
 
 }
 
+//Player 1 turn
 function xTurn(square)
 {
     //Checks if the selected cell is free
@@ -78,6 +87,7 @@ function xTurn(square)
     }
 }
 
+//Player 2 turn
 function oTurn(square)
 {
     //Checks if the selected cell is free
@@ -115,7 +125,7 @@ function turnClick(square)
     }
 }
 
-//Sets the selected square with the player value(x) and updates the board
+//Sets the selected square with the player value and updates the board with that character
 function turn(squareId, player)
 {
     origBoard[squareId] = player;
@@ -125,6 +135,7 @@ function turn(squareId, player)
         gameOver(gameWon);
 }
 
+//Checks if one of the players has the winning combination
 function checkWin(board, player)
 {   
     // Check on which indexes of the board are the player symbols and saves those indexes into the "a" array
@@ -141,6 +152,7 @@ function checkWin(board, player)
     return gameWon;
 }
 
+//Triggers the table style modifications and the game over message box
 function gameOver(gameWon)
 {
     gameCompleted = true;
@@ -174,23 +186,27 @@ function gameOver(gameWon)
     }
 }
 
+//Specifies which player won inside the game over box
 function declareWinner(who)
 {
     document.querySelector(".endgame").style.display="block";
     document.querySelector(".endgame .text").innerText= who;
 }
 
+//Checks if the table has any empty cells
 function emptySquares()
 {
     return origBoard.filter(s => typeof s == "number");
 }
 
+//Finds the best position where the AI can place his symbol
 function bestSpot()
 {   
         return minimax(origBoard, aiPlayer).index;
         //return emptySquares()[0];
 }
 
+//Checks if there is a tie
 function checkTie()
 {
     if(emptySquares().length == 0)
@@ -206,7 +222,7 @@ function checkTie()
     return false;
 }
 
-
+//Minimax algorithm in order to settle which table positions are the best to be played
 function minimax(newBoard, player) 
 {
 	var availSpots = emptySquares();
